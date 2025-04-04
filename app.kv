@@ -1,0 +1,130 @@
+BoxLayout:
+    orientation: 'vertical'
+
+    # Parent BoxLayout to contain both columns
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 20
+        padding: 10
+
+        # Left Column (Controls) - Narrower
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.3  # Reduced width for the left column
+            spacing: 10
+
+            Label:
+                text: 'Sort by:'
+                font_size: sp(20)
+                bold: True
+                size_hint_y: None
+                height: sp(40)
+
+            Spinner:
+                id: sort_spinner
+                text: 'Title'
+                values: ['Title', 'Artist', 'Year']
+                size_hint_y: None
+                height: sp(50)
+                on_text: app.change_sort(app.sort_options.get(self.text.lower(), 'title'))
+
+            Label:
+                text: 'Add New Song...'
+                font_size: sp(20)
+                bold: True
+                size_hint_y: None
+                height: sp(40)
+
+            Label:
+                text: 'Title:'
+                font_size: sp(18)
+                size_hint_y: None
+                height: sp(40)
+
+            TextInput:
+                id: title_input
+                font_size: sp(18)
+                multiline: False
+                size_hint_y: None
+                height: sp(40)
+
+            Label:
+                text: 'Artist:'
+                font_size: sp(18)
+                size_hint_y: None
+                height: sp(40)
+
+            TextInput:
+                id: artist_input
+                font_size: sp(18)
+                multiline: False
+                size_hint_y: None
+                height: sp(40)
+
+            Label:
+                text: 'Year:'
+                font_size: sp(18)
+                size_hint_y: None
+                height: sp(40)
+
+            TextInput:
+                id: year_input
+                font_size: sp(18)
+                multiline: False
+                input_filter: 'int'
+                size_hint_y: None
+                height: sp(40)
+
+            Button:
+                text: 'Add Song'
+                font_size: sp(18)
+                on_press: app.add_song()
+                size_hint_y: None
+                height: sp(50)
+
+            Button:
+                text: 'Clear'
+                font_size: sp(18)
+                on_press: app.clear_inputs()
+                size_hint_y: None
+                height: sp(50)
+
+            # Spacer to fill remaining space
+            Widget:
+                size_hint_y: 1
+
+        # Right Column (Song List) - Increased widget heights
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.7  # Increased width for the right column
+
+            Label:
+                id: status_label
+                text: 'To learn: 0  Learned: 0'
+                font_size: sp(24)  # Larger font size
+                bold: True
+                size_hint_y: None
+                height: sp(50)  # Increased height
+
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+
+                BoxLayout:
+                    id: song_list
+                    orientation: 'vertical'
+                    spacing: 10  # Increased spacing
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            Label:
+                id: message_label
+                text: app.status_text
+                font_size: sp(18)  # Larger font size
+                color: 1, 0, 1, 1
+                size_hint_y: None
+                height: sp(50)  # Increased height
+
+            # Spacer to fill remaining space
+            Widget:
+                size_hint_y: 0.1
